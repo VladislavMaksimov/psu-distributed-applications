@@ -6,7 +6,8 @@ namespace test_task
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            System.Data.DataTable painters = SQLiteConnector.get();
+            PgConnector.insert(painters);
         }
     }
 }
