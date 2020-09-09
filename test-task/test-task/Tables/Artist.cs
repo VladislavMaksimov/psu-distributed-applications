@@ -12,6 +12,7 @@ namespace test_task.Tables
         Country country;
         Movement movement;
         List<Picture> pictures = new List<Picture>();
+        List<Exposition> expositions = new List<Exposition>();
 
         public string Name
         {
@@ -61,7 +62,15 @@ namespace test_task.Tables
             }
         }
 
-        public Artist(string name, string surname, string second_name, Country country, Movement movement, Picture picture)
+        public List<Exposition> Expositions
+        {
+            get
+            {
+                return expositions;
+            }
+        }
+
+        public Artist(string name, string surname, string second_name, Country country, Movement movement, Picture picture, Exposition exposition)
         {
             this.name = name;
             this.surname = surname;
@@ -69,6 +78,7 @@ namespace test_task.Tables
             this.country = country;
             this.movement = movement;
             this.pictures.Add(picture);
+            this.expositions.Add(exposition);
         }
     }
 }

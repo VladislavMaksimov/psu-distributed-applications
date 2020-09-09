@@ -30,6 +30,7 @@ namespace test_task
                 if (exArtist.Name == artist.Name && exArtist.Second_name == artist.Second_name && exArtist.Surname == artist.Surname)
                 {
                     exArtist.Pictures.Add(artist.Pictures.First());
+                    exArtist.Expositions.Add(artist.Expositions.First());
                     return;
                 }
             }
@@ -79,6 +80,25 @@ namespace test_task
                             CommandText = @"UPDATE pictures SET (id_artist) = ((SELECT MAX(id) FROM artists)) WHERE name = @name"
                         };
                         command.Parameters.AddWithValue("@name", picture.Name);
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                            Console.WriteLine();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                    }
+
+                    foreach (Exposition exposition in artist.Expositions)
+                    {
+                        command = new NpgsqlCommand
+                        {
+                                Connection = conn,
+                                CommandText = @"INSERT INTO artists_expo VALUES((SELECT MAX(id) FROM artists),(SELECT id FROM expositions WHERE name = @name));"
+                        };
+                        command.Parameters.AddWithValue("@name", exposition.Name);
                         try
                         {
                             command.ExecuteNonQuery();
@@ -172,16 +192,16 @@ namespace test_task
                 setDirectory(pictures, picture.Name);
                 setDirectory(expositions, exposition.Name);
 
-                Artist artist = new Artist(name, surname, second_name, country, movement, picture);
+                Artist artist = new Artist(name, surname, second_name, country, movement, picture, exposition);
                 addOrUpdateArtist(artists, artist);
             }
 
             Console.WriteLine(artists);
 
-            //insertDirectory(countries, "countries");
-            //insertDirectory(movements, "movements");
+            insertDirectory(countries, "countries");
+            insertDirectory(movements, "movements");
             insertDirectory(pictures, "pictures");
-            //insertDirectory(expositions, "expositions");
+            insertDirectory(expositions, "expositions");
 
             insertArtists(artists);
         }
