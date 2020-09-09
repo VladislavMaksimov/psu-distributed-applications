@@ -56,7 +56,7 @@ namespace test_task
                     command = new NpgsqlCommand
                     {
                         Connection = conn,
-                        CommandText = @"INSERT INTO artists VALUES (DEFAULT, @name, @surname, @secondName, (SELECT id FROM countries c WHERE c.name = @country), (SELECT id FROM movements m WHERE m.name = @movement))"
+                        CommandText = @"INSERT INTO artists VALUES (DEFAULT, @name, @surname, @secondName, (SELECT DISTINCT id FROM countries c WHERE c.name = @country), (SELECT DISTINCT id FROM movements m WHERE m.name = @movement))"
                     };
                     command.Parameters.AddWithValue("@name", artist.Name);
                     command.Parameters.AddWithValue("@surname", artist.Surname);
@@ -83,7 +83,6 @@ namespace test_task
                         try
                         {
                             command.ExecuteNonQuery();
-                            Console.WriteLine();
                         }
                         catch (Exception e)
                         {
@@ -96,13 +95,12 @@ namespace test_task
                         command = new NpgsqlCommand
                         {
                                 Connection = conn,
-                                CommandText = @"INSERT INTO artists_expo VALUES((SELECT MAX(id) FROM artists),(SELECT id FROM expositions WHERE name = @name));"
+                                CommandText = @"INSERT INTO artists_expo VALUES((SELECT MAX(id) FROM artists),(SELECT DISTINCT id FROM expositions WHERE name = @name));"
                         };
                         command.Parameters.AddWithValue("@name", exposition.Name);
                         try
                         {
                             command.ExecuteNonQuery();
-                            Console.WriteLine();
                         }
                         catch (Exception e)
                         {
@@ -195,8 +193,6 @@ namespace test_task
                 Artist artist = new Artist(name, surname, second_name, country, movement, picture, exposition);
                 addOrUpdateArtist(artists, artist);
             }
-
-            Console.WriteLine(artists);
 
             insertDirectory(countries, "countries");
             insertDirectory(movements, "movements");
