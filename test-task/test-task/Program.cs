@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace test_task
 {
@@ -7,7 +8,8 @@ namespace test_task
         static void Main(string[] args)
         {
             System.Data.DataTable painters = SQLiteConnector.get();
-            PgConnector.insert(painters);
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            //PgConnector.insert(painters);
         }
     }
 }
