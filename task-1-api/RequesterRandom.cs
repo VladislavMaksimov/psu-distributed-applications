@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace task_1_api
 {
-    class RandomRequester
+    class RequesterRandom
     {
         static async Task<string> getRequest(string uri, string api)
         {
@@ -24,7 +24,6 @@ namespace task_1_api
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
                 return "";
             }
         }

@@ -21,6 +21,8 @@ namespace task_1_api
         public MainWindow()
         {
             InitializeComponent();
+            AuthWindow auth = new AuthWindow();
+            auth.ShowDialog();
         }
 
         private void sendButton_Click(object sender, RoutedEventArgs e)
@@ -30,8 +32,8 @@ namespace task_1_api
 
         private void generateRandom_Click(object sender, RoutedEventArgs e)
         {
-            JsonDocument postText = JsonDocument.Parse(RandomRequester.getText());
-            JsonDocument postImage = JsonDocument.Parse(RandomRequester.getImage());
+            JsonDocument postText = JsonDocument.Parse(RequesterRandom.getText());
+            JsonDocument postImage = JsonDocument.Parse(RequesterRandom.getImage());
 
             string uriImage = postImage.RootElement[0].GetProperty("url").ToString();
 
