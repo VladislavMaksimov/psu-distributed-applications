@@ -23,6 +23,7 @@ namespace task_1_api
             InitializeComponent();
             AuthWindow auth = new AuthWindow();
             auth.ShowDialog();
+            messageText.Text = Config.token;
         }
 
         private void sendButton_Click(object sender, RoutedEventArgs e)

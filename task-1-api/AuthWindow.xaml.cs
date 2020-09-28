@@ -11,18 +11,24 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using EO.WebBrowser;
 
 namespace task_1_api
 {
-    /// <summary>
-    /// Логика взаимодействия для Window1.xaml
-    /// </summary>
     public partial class AuthWindow : Window
     {
         public AuthWindow()
         {
             InitializeComponent();
-            getToken.Navigate("https://vk.com/");
+            string api = "https://oauth.vk.com/authorize?client_id=" + Config.appID + "&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=wall&response_type=token&v=5.124";
+            getToken.Navigate(api);
+            getToken.LoadCompleted += GetToken_LoadCompleted;
+        }
+
+        private void GetToken_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            Config.token = getToken.Source.ToString();  
+            //throw new NotImplementedException();
         }
     }
 }
