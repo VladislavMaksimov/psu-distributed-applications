@@ -60,13 +60,23 @@ namespace task_1_api
 
                 for (int i = 0; i < items.GetArrayLength(); i++)
                 {
+                    string postText = items[i].GetProperty("text").ToString();
+
+                    if (!postText.Contains("#dist_apps"))
+                        continue;
+
+                    string finalText = "";
+                    foreach (string substr in postText.Split(new[] { "#dist_apps" }, StringSplitOptions.None))
+                        finalText += substr;
+
                     TextBox textBox = new TextBox();
                     textBox.Name = "post" + items[i].GetProperty("id").ToString();
                     textBox.Width = 400;
                     textBox.Height = 100;
                     textBox.VerticalAlignment = VerticalAlignment.Top;
                     textBox.Margin = new Thickness(0, i * 200, 0, 0);
-                    textBox.Text += items[i].GetProperty("text").ToString() + '\n';
+                    textBox.Text = finalText;
+                    textBox.TextWrapping = TextWrapping.Wrap;
                     postsGrid.Children.Add(textBox);
                 }
             }
