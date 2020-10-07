@@ -32,10 +32,6 @@ namespace task_1_api
         {
             string postString = messageText.Text + "\n\n%23dist_apps";
             RequesterVK.createPost(postString, uriImage);
-
-            JsonDocument posts = JsonDocument.Parse(RequesterVK.getPosts().Result);
-            //string posts = RequesterVK.getPosts().Result;
-            //messageText.Text = posts;
         }
 
         private void generateRandom_Click(object sender, RoutedEventArgs e)
@@ -60,22 +56,19 @@ namespace task_1_api
             if (postsTab.IsSelected)
             {
                 JsonDocument posts = JsonDocument.Parse(RequesterVK.getPosts().Result);
-                //posts.RootElement
-                //string posts = RequesterVK.getPosts().Result;
                 var items = posts.RootElement.GetProperty("response").GetProperty("items");
-
-                var textBoxx = new TextBox();
 
                 for (int i = 0; i < items.GetArrayLength(); i++)
                 {
-                    textBoxx.Text += items[i].GetProperty("text").ToString() + '\n';
+                    TextBox textBox = new TextBox();
+                    textBox.Name = "post" + items[i].GetProperty("id").ToString();
+                    textBox.Width = 400;
+                    textBox.Height = 100;
+                    textBox.VerticalAlignment = VerticalAlignment.Top;
+                    textBox.Margin = new Thickness(0, i * 200, 0, 0);
+                    textBox.Text += items[i].GetProperty("text").ToString() + '\n';
+                    postsGrid.Children.Add(textBox);
                 }
-
-                textBoxx.Name = "txt";
-                textBoxx.Width = 400;
-                textBoxx.Height = 500;
-                textBoxx.Margin = new Thickness(0, 20, 0, 0);
-                postsGrid.Children.Add(textBoxx);
             }
             else
             {
@@ -85,7 +78,7 @@ namespace task_1_api
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Process.Start("cmd.exe", "/C RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 255");
+            //Process.Start("cmd.exe", "/C RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 255");
         }
     }
 }

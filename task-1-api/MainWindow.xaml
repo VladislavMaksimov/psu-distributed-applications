@@ -17,8 +17,10 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="postsTab" Header="Посты">
-                <Grid x:Name="postsGrid">
-                    <ScrollViewer x:Name="postsViewer" Margin="0,0,0,9.6"/>
+                <Grid>
+                    <ScrollViewer x:Name="postsViewer" Margin="0,0,0,9.6">
+                        <Grid x:Name="postsGrid"/>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
             
