@@ -5,12 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:task_1_api"
         mc:Ignorable="d"
-        Title="MainWindow" Height="589.419" Width="800">
+        Title="MainWindow" Height="589.419" Width="800" Closed="Window_Closed">
     <Grid Margin="0,0,-0.4,-2">
-        <Button Name="sendButton" Content="Запостить" HorizontalAlignment="Left" Margin="239,458,0,0" VerticalAlignment="Top" Width="142" Height="49" Click="sendButton_Click" FontSize="18"/>
-        <TextBox x:Name="messageText" HorizontalAlignment="Left" Height="98" Margin="239,344,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302"/>
-        <Button x:Name="generateRandom" Content="Сгенерировать пост" HorizontalAlignment="Left" Margin="399,458,0,0" VerticalAlignment="Top" Width="142" Height="49" FontSize="14" Click="generateRandom_Click"/>
-        <Image x:Name="cat" HorizontalAlignment="Left" Height="282" Margin="10,32,0,0" VerticalAlignment="Top" Width="531" />
-
+        <TabControl SelectionChanged="tab_Changed">
+            <TabItem Header="Генерация">
+                <Grid>
+                    <Button Name="sendButton" Content="Запостить" HorizontalAlignment="Left" Margin="239,458,0,0" VerticalAlignment="Top" Width="142" Height="49" Click="sendButton_Click" FontSize="18"/>
+                    <TextBox x:Name="messageText" HorizontalAlignment="Left" Height="98" Margin="239,344,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302"/>
+                    <Button x:Name="generateRandom" Content="Сгенерировать пост" HorizontalAlignment="Left" Margin="399,458,0,0" VerticalAlignment="Top" Width="142" Height="49" FontSize="14" Click="generateRandom_Click"/>
+                    <Image x:Name="cat" HorizontalAlignment="Left" Height="282" Margin="10,32,0,0" VerticalAlignment="Top" Width="531" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="postsTab" Header="Посты">
+                <Grid x:Name="postsGrid">
+                    <ScrollViewer x:Name="postsViewer" Margin="0,0,0,9.6"/>
+                </Grid>
+            </TabItem>
+            
+        </TabControl>
     </Grid>
 </Window>
