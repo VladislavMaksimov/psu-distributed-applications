@@ -74,10 +74,26 @@ namespace task_1_api
                     textBox.Width = 400;
                     textBox.Height = 100;
                     textBox.VerticalAlignment = VerticalAlignment.Top;
-                    textBox.Margin = new Thickness(0, i * 200, 0, 0);
+                    textBox.Margin = new Thickness(0, 50 + i * 200, 0, 0);
                     textBox.Text = finalText;
                     textBox.TextWrapping = TextWrapping.Wrap;
                     postsGrid.Children.Add(textBox);
+
+                    Button updateButton = new Button();
+                    updateButton.Content = "Сохранить";
+                    updateButton.VerticalAlignment = VerticalAlignment.Top;
+                    updateButton.Width = 150;
+                    updateButton.Height = 50;
+                    updateButton.Margin = new Thickness(0, 170 + i * 200, 250, 0);
+                    postsGrid.Children.Add(updateButton);
+
+                    Button deleteButton = new Button();
+                    deleteButton.Content = "Удалить";
+                    deleteButton.VerticalAlignment = VerticalAlignment.Top;
+                    deleteButton.Width = 150;
+                    deleteButton.Height = 50;
+                    deleteButton.Margin = new Thickness(250, 170 + i * 200, 0, 0);
+                    postsGrid.Children.Add(deleteButton);
                 }
             }
             else
