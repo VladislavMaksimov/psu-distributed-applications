@@ -19,7 +19,10 @@
             <TabItem x:Name="postsTab" Header="Посты">
                 <Grid>
                     <ScrollViewer x:Name="postsViewer" Margin="0,0,0,9.6">
-                        <Grid x:Name="postsGrid"/>
+                        <Grid x:Name="postsGrid">
+                            <TextBox x:Name="dog" HorizontalAlignment="Left" Height="23" Margin="352,220,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+
+                        </Grid>
                     </ScrollViewer>
                 </Grid>
             </TabItem>

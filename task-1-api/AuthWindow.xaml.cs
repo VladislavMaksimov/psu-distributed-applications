@@ -23,7 +23,6 @@ namespace task_1_api
         {
             InitializeComponent();
             string api = "https://oauth.vk.com/authorize?client_id=" + Config.appID + "&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=wall&response_type=token&v=5.124";
-            //Application.SetCookie(new Uri("https://m.vk.com/"), "");
 
             getToken.Navigate(api);
             getToken.LoadCompleted += GetToken_LoadCompleted;
@@ -35,7 +34,6 @@ namespace task_1_api
             string[] url = getToken.Source.ToString().Split(symbols);
             Config.token = url[1];
             Config.userID = url[5];
-            //throw new NotImplementedException();
         }
     }
 }
