@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-10-08T03:39:41.194Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" etag="Lg0UiPb6mRFxNSSEKoPV" version="13.7.5" type="github">
+<mxfile host="app.diagrams.net" modified="2020-10-08T03:44:05.855Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" etag="IQFdrBIs5v0OPFU9Lat7" version="13.7.5" type="github">
   <diagram id="Kb7JWgAajQ4Wwjjnbo75" name="Page-1">
     <mxGraphModel dx="1038" dy="499" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -10,8 +10,8 @@
         <mxCell id="i-wQdqTJ9NW0_4OIA6yA-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="200" y="85" width="610" height="535" as="geometry" />
         </mxCell>
-        <mxCell id="i-wQdqTJ9NW0_4OIA6yA-4" value="Просмотреть случайный текст со случайным изображением кота" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="230" y="90" width="160" height="110" as="geometry" />
+        <mxCell id="i-wQdqTJ9NW0_4OIA6yA-4" value="Просмотреть случайное фото с котом" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="230" y="90" width="130" height="80" as="geometry" />
         </mxCell>
         <mxCell id="i-wQdqTJ9NW0_4OIA6yA-5" value="" style="endArrow=none;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.043;entryY=0.726;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="i-wQdqTJ9NW0_4OIA6yA-1" target="i-wQdqTJ9NW0_4OIA6yA-4" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -19,7 +19,7 @@
             <mxPoint x="440" y="240" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="i-wQdqTJ9NW0_4OIA6yA-6" value="Опубликовать пост с выбранными случайным текстом" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="i-wQdqTJ9NW0_4OIA6yA-6" value="Опубликовать пост со сгенерированным случайным текстом" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="350" y="180" width="159.99" height="110" as="geometry" />
         </mxCell>
         <mxCell id="i-wQdqTJ9NW0_4OIA6yA-7" value="" style="endArrow=none;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="i-wQdqTJ9NW0_4OIA6yA-1" target="i-wQdqTJ9NW0_4OIA6yA-6" edge="1">
@@ -82,6 +82,15 @@
             <mxPoint y="500" as="sourcePoint" />
             <mxPoint x="160" y="500" as="targetPoint" />
             <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="B3hi7C1LZ10MMCnv2Qp2-2" value="Сгенерировать случайный текст" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="90" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="B3hi7C1LZ10MMCnv2Qp2-3" value="" style="endArrow=none;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="i-wQdqTJ9NW0_4OIA6yA-1" target="B3hi7C1LZ10MMCnv2Qp2-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="290" as="sourcePoint" />
+            <mxPoint x="440" y="240" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
