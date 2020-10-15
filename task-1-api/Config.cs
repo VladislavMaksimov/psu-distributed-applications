@@ -10,13 +10,16 @@ namespace task_1_api
 {
     class Config
     {
+        // Параметры для работы с приложением
         public static string appID = "7621971";
         public static string token = "";
         public static string userID = "";
 
+        // Пароль и соль для шифрования
         static string pass = "1234567890";
         static string salt = "aaaaabbb";
 
+        // Шифрования пароля и токена и запись в файл
         public static void encrypt()
         {
             byte[] encryptedToken = Crypto.encrypt(token, pass, salt);
@@ -32,6 +35,7 @@ namespace task_1_api
             }
         }
 
+        // Получение пароля и токена из файла и дешифрование
         public static void decrypt()
         {
             if (!File.Exists("token.dat") || !File.Exists("id.dat"))

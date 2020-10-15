@@ -22,15 +22,18 @@ namespace task_1_api
         public AuthWindow()
         {
             InitializeComponent();
-            string api = "https://oauth.vk.com/authorize?client_id=" + Config.appID + "&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=wall&response_type=token&v=5.124";
 
+            // Переход по нужному адресу для получения токена и id пользователя
+            string api = "https://oauth.vk.com/authorize?client_id=" + Config.appID + "&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=wall&response_type=token&v=5.124";
             getToken.Navigate(api);
             getToken.LoadCompleted += GetToken_LoadCompleted;
         }
 
         private void GetToken_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
+            // Дешифрование токена и id из файлов
             Config.decrypt();
+            // Если токен и id не хранятся в файлах, получение их с помощью авторизации Вконтакте
             if (Config.token == "" || Config.userID == "")
             {
                 char[] symbols = { '=', '&' };

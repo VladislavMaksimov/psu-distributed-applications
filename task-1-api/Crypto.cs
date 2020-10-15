@@ -10,6 +10,7 @@ namespace task_1_api
 {
     class Crypto
     {
+        // Шифрование строки с помощью алгоритма AES
         public static byte[] encrypt(string text, string pass, string salt)
         {
             Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(pass, Encoding.ASCII.GetBytes(salt));
@@ -39,6 +40,7 @@ namespace task_1_api
             return encrypted;
         }
 
+        // Дешифрование строки с помощью алгоритма AES
         public static string decrypt(byte[] encryptedText, string pass, string salt)
         {
             Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(pass, Encoding.ASCII.GetBytes(salt));
