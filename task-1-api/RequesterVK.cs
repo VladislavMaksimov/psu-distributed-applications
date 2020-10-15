@@ -54,11 +54,10 @@ namespace task_1_api
             {
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(uri);
-                await client.GetAsync(api);
+                HttpResponseMessage response = client.GetAsync(api).Result;
             }
             catch
             {
-
             }
         }
 

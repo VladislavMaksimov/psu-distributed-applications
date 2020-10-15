@@ -128,7 +128,7 @@ namespace task_1_api
         }
 
         // Удаление выбранного поста
-        private void deleteButton_Click (object sender, RoutedEventArgs e)
+        private async void deleteButton_Click (object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             RequesterVK.deletePost(button.Tag.ToString());
