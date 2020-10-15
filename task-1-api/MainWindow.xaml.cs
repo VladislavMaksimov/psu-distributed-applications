@@ -28,6 +28,9 @@ namespace task_1_api
             AuthWindow auth = new AuthWindow();
             auth.ShowDialog();
 
+            if (Config.token == "" || Config.userID == "")
+                this.Close();
+
             JsonDocument postImage = JsonDocument.Parse(RequesterRandom.getImage());
             uriImage = postImage.RootElement[0].GetProperty("url").ToString();
 
@@ -57,8 +60,15 @@ namespace task_1_api
 
         private void generateRandom_Click(object sender, RoutedEventArgs e)
         {
-            JsonDocument postText = JsonDocument.Parse(RequesterRandom.getText());
-            messageText.Text = postText.RootElement[0].ToString();
+            try
+            {
+                JsonDocument postText = JsonDocument.Parse(RequesterRandom.getText());
+                messageText.Text = postText.RootElement[0].ToString();
+            }
+            catch
+            {
+
+            }
         }
 
         private void getPosts()
@@ -129,7 +139,7 @@ namespace task_1_api
                 MessageBox.Show("Недопустимые символы: # и &");
                 return;
             }
-            RequesterVK.updatePost(button.Tag.ToString(), textBox.Text + "\n\n%23dist_apps");
+            string temp = RequesterVK.updatePost(button.Tag.ToString(), textBox.Text + "\n\n%23dist_apps").Result;
             postsGrid.Children.Clear();
             getPosts();
         }
@@ -148,7 +158,7 @@ namespace task_1_api
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            //Process.Start("cmd.exe", "/C RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 255");
+            Process.Start("cmd.exe", "/C RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 255");
         }
     }
 }

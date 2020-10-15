@@ -30,10 +30,22 @@ namespace task_1_api
 
         private void GetToken_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-            char[] symbols = { '=', '&' };
-            string[] url = getToken.Source.ToString().Split(symbols);
-            Config.token = url[1];
-            Config.userID = url[5];
+            Config.decrypt();
+            if (Config.token == "" || Config.userID == "")
+            {
+                char[] symbols = { '=', '&' };
+                string[] url = getToken.Source.ToString().Split(symbols);
+                if (url[0] != "https://oauth.vk.com/authorize?client_id")
+                {
+                    Config.token = url[1];
+                    Config.userID = url[5];
+                    Config.encrypt();
+                }
+            }
+            else
+            {
+                this.Close();
+            }
         }
     }
 }
