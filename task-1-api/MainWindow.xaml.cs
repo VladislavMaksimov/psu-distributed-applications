@@ -24,10 +24,16 @@ namespace task_1_api
 
         public MainWindow()
         {
+            // При инициализации компонента, вызываем окно авторизации и аутентификации
             InitializeComponent();
             AuthWindow auth = new AuthWindow();
             auth.ShowDialog();
 
+            // Если невозможно отправлять запросы, приложение закрывается
+            if (Config.token == "" || Config.userID == "")
+                this.Close();
+
+            // Добавление иллюстрации с котом
             JsonDocument postImage = JsonDocument.Parse(RequesterRandom.getImage());
             uriImage = postImage.RootElement[0].GetProperty("url").ToString();
 
@@ -40,6 +46,7 @@ namespace task_1_api
             cat.Source = bitmap;
         }
 
+        // Отправка поста
         private void sendButton_Click(object sender, RoutedEventArgs e)
         {
             Regex regex = new Regex(@"[#&]");
@@ -55,12 +62,21 @@ namespace task_1_api
             MessageBox.Show("Пост опубликован!");
         }
 
+        // Генерация случайного поста
         private void generateRandom_Click(object sender, RoutedEventArgs e)
         {
-            JsonDocument postText = JsonDocument.Parse(RequesterRandom.getText());
-            messageText.Text = postText.RootElement[0].ToString();
+            try
+            {
+                JsonDocument postText = JsonDocument.Parse(RequesterRandom.getText());
+                messageText.Text = postText.RootElement[0].ToString();
+            }
+            catch
+            {
+
+            }
         }
 
+        // Получение постов
         private void getPosts()
         {
             JsonDocument posts = JsonDocument.Parse(RequesterVK.getPosts().Result);
@@ -111,7 +127,8 @@ namespace task_1_api
             }
         }
 
-        private void deleteButton_Click (object sender, RoutedEventArgs e)
+        // Удаление выбранного поста
+        private async void deleteButton_Click (object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             RequesterVK.deletePost(button.Tag.ToString());
@@ -119,6 +136,7 @@ namespace task_1_api
             getPosts();
         }
         
+        // Редактирование выбранного поста
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
@@ -129,7 +147,7 @@ namespace task_1_api
                 MessageBox.Show("Недопустимые символы: # и &");
                 return;
             }
-            RequesterVK.updatePost(button.Tag.ToString(), textBox.Text + "\n\n%23dist_apps");
+            string temp = RequesterVK.updatePost(button.Tag.ToString(), textBox.Text + "\n\n%23dist_apps").Result;
             postsGrid.Children.Clear();
             getPosts();
         }
@@ -148,7 +166,7 @@ namespace task_1_api
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            //Process.Start("cmd.exe", "/C RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 255");
+            Process.Start("cmd.exe", "/C RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 255");
         }
     }
 }

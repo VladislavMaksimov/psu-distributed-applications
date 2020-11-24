@@ -9,6 +9,7 @@ namespace task_1_api
 {
     class RequesterRandom
     {
+        // Отправление GET-запроса к api
         static async Task<string> getRequest(string uri, string api)
         {
             HttpClient client = new HttpClient();
@@ -28,6 +29,7 @@ namespace task_1_api
             }
         }
 
+        // Получение рандомного текста сообщения
         public static string getText()
         {
             string uri = "https://baconipsum.com/";
@@ -37,7 +39,7 @@ namespace task_1_api
         }
 
 
-
+        // Получение рандомной иллюстрации с котом
         public static string getImage()
         {
             string uri = "https://api.thecatapi.com/";

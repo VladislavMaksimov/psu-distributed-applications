@@ -95,6 +95,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Crypto.cs" />
     <Compile Include="RequesterRandom.cs" />
     <Compile Include="RequesterVK.cs" />
     <Compile Include="AuthWindow.xaml.cs">
