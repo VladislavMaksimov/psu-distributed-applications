@@ -1,5 +1,6 @@
 ﻿using System;
 using WebSocket = WebSocketSharp.WebSocket;
+using System.Text.Json;
 
 namespace task_2
 {
@@ -7,6 +8,7 @@ namespace task_2
     {
         static void Main(string[] args)
         {
+            //JsonSerializer.Serialize
             using (var ws = new WebSocket("ws://localhost:8080/"))
             {
                 ws.OnOpen += (sender, e) => Console.WriteLine("Connected to server.");
