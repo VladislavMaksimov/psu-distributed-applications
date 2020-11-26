@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "task-2-client", "task-2-cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "task-2-server", "..\task-2-server\task-2-server.csproj", "{A31322BC-F5CC-42E1-A034-758196B52E7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "task-2-messages", "..\task-2-messages\task-2-messages.csproj", "{77CCFC52-09C7-47E5-849E-6B18DAF56E70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages", "..\Messages\Messages.csproj", "{DC9A5415-47A9-4693-81D2-1A08A6DF8561}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{A31322BC-F5CC-42E1-A034-758196B52E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A31322BC-F5CC-42E1-A034-758196B52E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A31322BC-F5CC-42E1-A034-758196B52E7E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77CCFC52-09C7-47E5-849E-6B18DAF56E70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77CCFC52-09C7-47E5-849E-6B18DAF56E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77CCFC52-09C7-47E5-849E-6B18DAF56E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77CCFC52-09C7-47E5-849E-6B18DAF56E70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC9A5415-47A9-4693-81D2-1A08A6DF8561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC9A5415-47A9-4693-81D2-1A08A6DF8561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC9A5415-47A9-4693-81D2-1A08A6DF8561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC9A5415-47A9-4693-81D2-1A08A6DF8561}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
