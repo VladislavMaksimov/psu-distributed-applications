@@ -15,7 +15,6 @@ namespace task_2
         static string connection = new NpgsqlConnectionStringBuilder()
         {
             Host = "localhost",
-            //Port = 5432,
             Username = "postgres",
             Password = "1234",
             Database = "artists"
@@ -23,21 +22,179 @@ namespace task_2
 
         static NpgsqlCommand command;
 
-        static void addOrUpdateArtist(HashSet<Artist> artists, Artist artist)
+        // Проверяет существование записи в справочнике
+        static bool IsThatDirectoryStringExists(Directory directory)
         {
-            foreach (Artist exArtist in artists)
+            using (var conn = new NpgsqlConnection(connection))
             {
-                if (exArtist.Name == artist.Name && exArtist.Second_name == artist.Second_name && exArtist.Surname == artist.Surname)
+                try
                 {
-                    exArtist.Pictures.Add(artist.Pictures.First());
-                    exArtist.Expositions.Add(artist.Expositions.First());
-                    return;
+                    conn.Open();
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return true;
+                }
+
+                string table = "";
+                // В зависимости от того, запись какого справочника передана, добавляется название таблицы
+                if (directory is Country)
+                    table = "countries";
+
+                if (directory is Exposition)
+                    table = "expositions";
+
+                if (directory is Movement)
+                    table = "movements";
+
+                if (directory is Picture)
+                    table = "pictures";
+
+                // Проверка происходит по количеству (если >0, то запись есть)
+                command = new NpgsqlCommand
+                {
+                    Connection = conn,
+                    CommandText = @"SELECT COUNT(0) FROM " + table + " WHERE name = @name"
+                };
+                command.Parameters.AddWithValue("@name", directory.Name);
+
+                NpgsqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                int count = reader.GetInt32(0);
+                conn.Close();
+
+                if (count > 0)
+                    return true;
+                else
+                    return false;
             }
-            artists.Add(artist);
         }
 
-        static void insertArtists(HashSet<Artist> artists)
+        // Проверяет существование записи в таблице художников
+        static bool IsThatArtistExists(Artist artist)
+        {
+            using (var conn = new NpgsqlConnection(connection))
+            {
+                try
+                {
+                    conn.Open();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return true;
+                }
+
+                // Проверка производится по количеству записей (ФИО художника считается уникальным)
+                command = new NpgsqlCommand
+                {
+                    Connection = conn,
+                    CommandText = @"SELECT COUNT(0) FROM artists WHERE name = @name AND surname = @surname
+                                    AND second_name = @second_name"
+                };
+                command.Parameters.AddWithValue("@name", artist.Name);
+                command.Parameters.AddWithValue("@surname", artist.Surname);
+                command.Parameters.AddWithValue("@second_name", artist.Second_name);
+
+                NpgsqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                int count = reader.GetInt32(0);
+                conn.Close();
+
+                if (count > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        // Добавляет запись в один из справочников
+        static void InsertIntoDirectory(Directory directory, NpgsqlConnection conn)
+        {
+            if (!IsThatDirectoryStringExists(directory))
+            {
+                string table = "";
+                if (directory is Country)
+                    table = "countries";
+                if (directory is Exposition)
+                    table = "expositions";
+                if (directory is Movement)
+                    table = "movements";
+
+                command = new NpgsqlCommand
+                {
+                    Connection = conn,
+                    CommandText = @"INSERT INTO " + table +" VALUES (DEFAULT, @directory)"
+                };
+                command.Parameters.AddWithValue("@directory", directory.Name);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        // Добавляет запись в таблицу художников
+        static void InsertArtist(Artist artist, NpgsqlConnection conn)
+        {
+            if (!IsThatArtistExists(artist))
+            {
+                command = new NpgsqlCommand
+                {
+                    Connection = conn,
+                    CommandText = @"INSERT INTO artists VALUES (DEFAULT, @surname, @name, @secondName,
+                                    (SELECT DISTINCT id FROM countries c WHERE c.name = @country),
+                                    (SELECT DISTINCT id FROM movements m WHERE m.name = @movement))"
+                };
+                command.Parameters.AddWithValue("@name", artist.Name);
+                command.Parameters.AddWithValue("@surname", artist.Surname);
+                command.Parameters.AddWithValue("@secondName", artist.Second_name);
+                command.Parameters.AddWithValue("@country", artist.Country.Name);
+                command.Parameters.AddWithValue("@movement", artist.Movement.Name);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        // Добавляет запись в таблицу картин
+        static void InsertPicture(Artist artist, NpgsqlConnection conn)
+        {
+            if (!IsThatDirectoryStringExists(artist.Picture))
+            {
+                command = new NpgsqlCommand
+                {
+                    Connection = conn,
+                    CommandText = @"INSERT INTO pictures VALUES (DEFAULT, @picture,
+                                        (SELECT id FROM artists WHERE name = @name AND surname = @surname AND second_name = @second_name))"
+                };
+                command.Parameters.AddWithValue("@picture", artist.Picture.Name);
+                command.Parameters.AddWithValue("@name", artist.Name);
+                command.Parameters.AddWithValue("@surname", artist.Surname);
+                command.Parameters.AddWithValue("@second_name", artist.Second_name);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        // Добавляет запись в таблицу связку артистов с экспозициями
+        static void ConnectArtistWithExpo(Artist artist, NpgsqlConnection conn)
+        {
+            command = new NpgsqlCommand
+            {
+                Connection = conn,
+                CommandText = @"INSERT INTO artists_expo VALUES
+                                ((SELECT id FROM artists WHERE name = @name AND surname = @surname AND second_name = @second_name),
+                                (SELECT id FROM expositions WHERE name = @exposition)) ON CONFLICT DO NOTHING"
+            };
+            command.Parameters.AddWithValue("@name", artist.Name);
+            command.Parameters.AddWithValue("@surname", artist.Surname);
+            command.Parameters.AddWithValue("@second_name", artist.Second_name);
+            command.Parameters.AddWithValue("@exposition", artist.Exposition.Name);
+
+            command.ExecuteNonQuery();
+        }
+
+        // Добавляет записи из пришедшего на сервер сообщения
+        public static void InsertData(Artist artist)
         {
             using (var conn = new NpgsqlConnection(connection))
             {
@@ -51,157 +208,21 @@ namespace task_2
                     return;
                 }
 
-                foreach (Artist artist in artists)
-                {
-                    command = new NpgsqlCommand
-                    {
-                        Connection = conn,
-                        CommandText = @"INSERT INTO artists VALUES (DEFAULT, @name, @surname, @secondName, (SELECT DISTINCT id FROM countries c WHERE c.name = @country), (SELECT DISTINCT id FROM movements m WHERE m.name = @movement))"
-                    };
-                    command.Parameters.AddWithValue("@name", artist.Name);
-                    command.Parameters.AddWithValue("@surname", artist.Surname);
-                    command.Parameters.AddWithValue("@secondName", artist.Second_name);
-                    command.Parameters.AddWithValue("@country", artist.Country.Name);
-                    command.Parameters.AddWithValue("@movement", artist.Movement.Name);
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                // Добавляет страну в справочник
+                InsertIntoDirectory(artist.Country, conn);
+                // Добавляет движение в справочник
+                InsertIntoDirectory(artist.Movement, conn);
+                // Добавляет экспозицию в справочник
+                InsertIntoDirectory(artist.Exposition, conn);
 
-                    foreach (Picture picture in artist.Pictures)
-                    {
-                        command = new NpgsqlCommand
-                        {
-                            Connection = conn,
-                            CommandText = @"UPDATE pictures SET (id_artist) = ((SELECT MAX(id) FROM artists)) WHERE name = @name"
-                        };
-                        command.Parameters.AddWithValue("@name", picture.Name);
-                        try
-                        {
-                            command.ExecuteNonQuery();
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.Message);
-                        }
-                    }
+                InsertArtist(artist, conn);
 
-                    foreach (Exposition exposition in artist.Expositions)
-                    {
-                        command = new NpgsqlCommand
-                        {
-                            Connection = conn,
-                            CommandText = @"INSERT INTO artists_expo VALUES((SELECT MAX(id) FROM artists),(SELECT DISTINCT id FROM expositions WHERE name = @name));"
-                        };
-                        command.Parameters.AddWithValue("@name", exposition.Name);
-                        try
-                        {
-                            command.ExecuteNonQuery();
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.Message);
-                        }
-                    }
-                }
+                InsertPicture(artist, conn);
+
+                ConnectArtistWithExpo(artist, conn);
 
                 conn.Close();
             }
         }
-
-        static int getMaxKey<T>(Dictionary<int, T>.KeyCollection keys)
-        {
-            int maxKey = 0;
-            foreach (int key in keys)
-            {
-                if (key > maxKey)
-                    maxKey = key;
-            }
-            return maxKey;
-        }
-
-        static void insertDirectory(HashSet<string> dict, string table)
-        {
-            using (var conn = new NpgsqlConnection(connection))
-            {
-                try
-                {
-                    conn.Open();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-
-                foreach (string name in dict)
-                {
-                    command = new NpgsqlCommand
-                    {
-                        Connection = conn,
-                        CommandText = @"INSERT INTO " + table + @" VALUES (CASE WHEN(SELECT MAX(id) FROM " + table + @") is NULL THEN 0 ELSE (SELECT MAX(id)+1 FROM " + table + @" ) END, @name)"
-                    };
-                    command.Parameters.AddWithValue("@name", name);
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
-
-                conn.Close();
-            }
-        }
-
-        static void setDirectory(HashSet<string> dict, string value)
-        {
-            if (!dict.Contains(value))
-                dict.Add(value);
-        }
-
-        static public void insert(DataTable data)
-        {
-            HashSet<string> countries = new HashSet<string>();
-            HashSet<string> movements = new HashSet<string>();
-            HashSet<string> pictures = new HashSet<string>();
-            HashSet<string> expositions = new HashSet<string>();
-
-            HashSet<Artist> artists = new HashSet<Artist>();
-
-            foreach (DataRow row in data.Rows)
-            {
-                Country country = new Country(row["country"].ToString());
-                Exposition exposition = new Exposition(row["exposition"].ToString());
-                Movement movement = new Movement(row["movement"].ToString());
-                Picture picture = new Picture(row["picture"].ToString());
-
-                string name = row["name"].ToString();
-                string surname = row["surname"].ToString();
-                string second_name = row["second_name"].ToString();
-
-                setDirectory(countries, country.Name);
-                setDirectory(movements, movement.Name);
-                setDirectory(pictures, picture.Name);
-                setDirectory(expositions, exposition.Name);
-
-                Artist artist = new Artist(name, surname, second_name, country, movement, picture, exposition);
-                addOrUpdateArtist(artists, artist);
-            }
-
-            insertDirectory(countries, "countries");
-            insertDirectory(movements, "movements");
-            insertDirectory(pictures, "pictures");
-            insertDirectory(expositions, "expositions");
-
-            insertArtists(artists);
-        }
-
     }
 }

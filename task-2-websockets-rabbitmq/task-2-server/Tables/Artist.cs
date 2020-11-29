@@ -11,8 +11,8 @@ namespace task_2.Tables
         string second_name;
         Country country;
         Movement movement;
-        List<Picture> pictures = new List<Picture>();
-        List<Exposition> expositions = new List<Exposition>();
+        Picture picture;
+        Exposition exposition;
 
         public string Name
         {
@@ -38,11 +38,11 @@ namespace task_2.Tables
             }
         }
 
-        public List<Picture> Pictures
+        public Picture Picture
         {
             get
             {
-                return pictures;
+                return picture;
             }
         }
 
@@ -62,11 +62,11 @@ namespace task_2.Tables
             }
         }
 
-        public List<Exposition> Expositions
+        public Exposition Exposition
         {
             get
             {
-                return expositions;
+                return exposition;
             }
         }
 
@@ -77,8 +77,8 @@ namespace task_2.Tables
             this.second_name = second_name;
             this.country = country;
             this.movement = movement;
-            this.pictures.Add(picture);
-            this.expositions.Add(exposition);
+            this.picture = picture;
+            this.exposition = exposition;
         }
     }
 }
