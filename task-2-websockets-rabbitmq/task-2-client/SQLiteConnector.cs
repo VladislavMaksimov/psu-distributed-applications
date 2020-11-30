@@ -5,7 +5,7 @@ using System.Text;
 
 using System.Data.SQLite;
 
-namespace task_2
+namespace task_2_client
 {
     class SQLiteConnector
     {

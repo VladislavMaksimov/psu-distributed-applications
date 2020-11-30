@@ -2,7 +2,9 @@
 {
     public enum MsgType
     {
-        Text,
-        DbString
+        DES,
+        DbString,
+        GetKey,
+        SendKey
     }
 }

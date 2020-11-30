@@ -8,7 +8,7 @@ using Microsoft.VisualBasic.CompilerServices;
 using Npgsql;
 using task_2.Tables;
 
-namespace task_2
+namespace task_2_server
 {
     class PgConnector
     {
@@ -109,6 +109,46 @@ namespace task_2
             }
         }
 
+        // Проверяет существование записи в таблице-связке
+        static bool IsThatConnectionExists(Artist artist)
+        {
+            using (var conn = new NpgsqlConnection(connection))
+            {
+                try
+                {
+                    conn.Open();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return true;
+                }
+
+                // Проверка производится по количеству записей
+                command = new NpgsqlCommand
+                {
+                    Connection = conn,
+                    CommandText = @"SELECT COUNT(0) FROM artists_expo WHERE id_artist = 
+                            (SELECT id FROM artists WHERE name = @name AND surname = @surname AND second_name = @second_name) 
+                            AND id_expo = (SELECT id FROM expositions WHERE name = @exposition)"
+                };
+                command.Parameters.AddWithValue("@name", artist.Name);
+                command.Parameters.AddWithValue("@surname", artist.Surname);
+                command.Parameters.AddWithValue("@second_name", artist.Second_name);
+                command.Parameters.AddWithValue("@exposition", artist.Exposition.Name);
+
+                NpgsqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                int count = reader.GetInt32(0);
+                conn.Close();
+
+                if (count > 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         // Добавляет запись в один из справочников
         static void InsertIntoDirectory(Directory directory, NpgsqlConnection conn)
         {
@@ -178,19 +218,22 @@ namespace task_2
         // Добавляет запись в таблицу связку артистов с экспозициями
         static void ConnectArtistWithExpo(Artist artist, NpgsqlConnection conn)
         {
-            command = new NpgsqlCommand
+            if (!IsThatConnectionExists(artist))
             {
-                Connection = conn,
-                CommandText = @"INSERT INTO artists_expo VALUES
+                command = new NpgsqlCommand
+                {
+                    Connection = conn,
+                    CommandText = @"INSERT INTO artists_expo VALUES
                                 ((SELECT id FROM artists WHERE name = @name AND surname = @surname AND second_name = @second_name),
                                 (SELECT id FROM expositions WHERE name = @exposition)) ON CONFLICT DO NOTHING"
-            };
-            command.Parameters.AddWithValue("@name", artist.Name);
-            command.Parameters.AddWithValue("@surname", artist.Surname);
-            command.Parameters.AddWithValue("@second_name", artist.Second_name);
-            command.Parameters.AddWithValue("@exposition", artist.Exposition.Name);
+                };
+                command.Parameters.AddWithValue("@name", artist.Name);
+                command.Parameters.AddWithValue("@surname", artist.Surname);
+                command.Parameters.AddWithValue("@second_name", artist.Second_name);
+                command.Parameters.AddWithValue("@exposition", artist.Exposition.Name);
 
-            command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
+            }
         }
 
         // Добавляет записи из пришедшего на сервер сообщения
