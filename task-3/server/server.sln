@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "server", "server.pyproj", "{8A1FD330-DEC9-4DB1-A911-191FD3243C27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "..\client1\client.csproj", "{CDFE9AE1-C9F3-4C00-8DC3-CEEA29240425}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "..\client\client.csproj", "{CDFE9AE1-C9F3-4C00-8DC3-CEEA29240425}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1DEF01F5-487F-4BD5-BB32-C6F42902592C}"
+	ProjectSection(SolutionItems) = preProject
+		messages.proto = messages.proto
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

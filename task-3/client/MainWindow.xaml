@@ -13,12 +13,12 @@
         <Label Content="Фамилия:" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label Content="Имя:" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label Content="Отчество:" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <RadioButton Content="Муж." HorizontalAlignment="Left" Margin="10,164,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="Жен." HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="95,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="95,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="95,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Сгенерировать" HorizontalAlignment="Left" Margin="10,221,0,0" VerticalAlignment="Top" Width="107" Height="31"/>
+        <RadioButton x:Name="Generate_Male" GroupName="Generate" Content="Муж." HorizontalAlignment="Left" Margin="10,164,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="Generate_Female" GroupName="Generate" Content="Жен." HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Generate_Surname" HorizontalAlignment="Left" Height="23" Margin="95,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Generate_Name" HorizontalAlignment="Left" Height="23" Margin="95,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Generate_Second_Name" HorizontalAlignment="Left" Height="23" Margin="95,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Сгенерировать" HorizontalAlignment="Left" Margin="10,221,0,0" VerticalAlignment="Top" Width="107" Height="31" Click="Generate_Button_Click"/>
         <Label Content="Добавить данные в базу:" HorizontalAlignment="Left" Margin="292,10,0,0" VerticalAlignment="Top" FontSize="20"/>
         <Label Content="Фамилия:" HorizontalAlignment="Left" Margin="299,47,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label Content="Имя:" HorizontalAlignment="Left" Margin="299,138,0,0" VerticalAlignment="Top" FontSize="16"/>
