@@ -32,19 +32,13 @@ namespace client1
 
         private void Generate_Button_Click(object sender, RoutedEventArgs e)
         {
-            string surname = Generate_Surname.Text;
-            string name = Generate_Name.Text;
-            string second_name = Generate_Second_Name.Text;
-            bool gender;
+            string gender;
 
             if (Generate_Male.IsChecked == true)
-                gender = true;
+                gender = "male";
             else if (Generate_Male.IsChecked == false)
-                gender = false;
+                gender = "female";
             else return;
-
-            if (surname == "" || name == "" || second_name == "")
-                return;
 
             string api = "http://" + host + ':' + port + "/random/" + gender;
 
@@ -54,19 +48,11 @@ namespace client1
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-            //const api = 'http://' + host + ':' + port + '/random/' + gender;
-            //fetch(api, {
-            //method: 'get',
-            //headers:
-            //            {
-            //                'Access-Control-Allow-Origin': '*'
-            //    }
-            //        })
-            //.then(response => response.json())
-            //.then(json => renderPerson(new Person(json['name'], json['surname'], json['second_name'])))
+            var person = Person.Parser.ParseFrom(response.GetResponseStream());
 
-                //var person = new global::Person;
-                //person.Name = 
+            Generate_Surname.Text = person.Surname;
+            Generate_Name.Text = person.Name;
+            Generate_Second_Name.Text = person.SecondName;
         }
 
         private void Add_Surname_Click(object sender, RoutedEventArgs e)

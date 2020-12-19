@@ -9,11 +9,11 @@ CORS(app)
 
 @app.route('/random/male', methods=['GET'])
 def get_random_male(): 
-    return jsonify(Storage.get_random_person(True).serialize())
+    return Storage.get_random_person(True).SerializeToString()
 
 @app.route('/random/female', methods=['GET'])
 def get_random_female(): 
-    return jsonify(Storage.get_random_person(False).serialize())
+    return Storage.get_random_person(False).SerializeToString()
 
 @app.route('/new/surname', methods=['POST'])
 @cross_origin(origin='*',headers=['Content-Type', 'Access-Control-Allow-Origin'])
