@@ -25,7 +25,5 @@ class Storage:
         else:
             gender = '0'
 
-        print(name)
-        print(unit.gender)
         db.execute('INSERT INTO ' + unit_type + ' (name, gender, added_by_user) VALUES (?,?,1)', (name, gender))
         db.commit()        

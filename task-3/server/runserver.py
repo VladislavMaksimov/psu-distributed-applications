@@ -26,15 +26,17 @@ def post_surname():
 @app.route('/new/name', methods=['POST'])
 @cross_origin(origin='*',headers=['Content-Type', 'Access-Control-Allow-Origin'])
 def post_name():
-    json_data = request.json
-    Storage.add_unit(Unit(json_data['name'], bool(json_data['gender']), 'name'))
-    return jsonify({'data': json_data['name']})
+    name = messages_pb2.Unit()
+    name.ParseFromString(request.data)
+    Storage.add_unit(name, 'name')
+    return jsonify({'data': name.name})
 
 @app.route('/new/second_name', methods=['POST'])
 @cross_origin(origin='*',headers=['Content-Type', 'Access-Control-Allow-Origin'])
 def post_second_name():
-    json_data = request.json
-    Storage.add_unit(Unit(json_data['name'], bool(json_data['gender']), 'second_name'))
-    return jsonify({'data': json_data['name']})
+    second_name = messages_pb2.Unit()
+    second_name.ParseFromString(request.data)
+    Storage.add_unit(second_name, 'second_name')
+    return jsonify({'data': second_name.name})
 
 app.run(port=8080, host='localhost', debug=True)

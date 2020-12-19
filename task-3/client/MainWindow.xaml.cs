@@ -67,7 +67,7 @@ namespace client1
 
                 //var person = new global::Person;
                 //person.Name = 
-            }
+        }
 
         private void Add_Surname_Click(object sender, RoutedEventArgs e)
         {
@@ -94,8 +94,60 @@ namespace client1
                 surname.WriteTo(stream);
             }
             request.GetResponse();
+        }
 
-            //surname.WriteTo()
+        private void Add_Name_Click(object sender, RoutedEventArgs e)
+        {
+            var name = new global::Unit();
+
+            name.Name = Add_Name.Text;
+
+            if (Add_Name_Male.IsChecked == true)
+                name.Gender = true;
+            else if (Add_Name_Male.IsChecked == false)
+                name.Gender = false;
+            else return;
+
+            if (name.Name == "")
+                return;
+
+            string api = "http://" + host + ':' + port + "/new/name";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(api);
+            request.Method = "POST";
+            request.ContentType = "application/protobuf";
+
+            using (var stream = request.GetRequestStream())
+            {
+                name.WriteTo(stream);
+            }
+            request.GetResponse();
+        }
+
+        private void Add_Second_Name_Click(object sender, RoutedEventArgs e)
+        {
+            var second_name = new global::Unit();
+
+            second_name.Name = Add_Second_Name.Text;
+
+            if (Add_Second_Name_Male.IsChecked == true)
+                second_name.Gender = true;
+            else if (Add_Second_Name_Male.IsChecked == false)
+                second_name.Gender = false;
+            else return;
+
+            if (second_name.Name == "")
+                return;
+
+            string api = "http://" + host + ':' + port + "/new/second_name";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(api);
+            request.Method = "POST";
+            request.ContentType = "application/protobuf";
+
+            using (var stream = request.GetRequestStream())
+            {
+                second_name.WriteTo(stream);
+            }
+            request.GetResponse();
         }
     }
 }

@@ -27,17 +27,17 @@
         <Label Content="Имя:" HorizontalAlignment="Left" Margin="299,138,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label Content="Отчество:" HorizontalAlignment="Left" Margin="299,224,0,0" VerticalAlignment="Top" FontSize="16"/>
         <TextBox x:Name="Add_Surname" HorizontalAlignment="Left" Height="23" Margin="384,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="349,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="384,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <RadioButton Content="Муж." HorizontalAlignment="Left" Margin="307,261,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="Жен." HorizontalAlignment="Left" Margin="359,261,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Add_Name" HorizontalAlignment="Left" Height="23" Margin="349,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Add_Second_Name" HorizontalAlignment="Left" Height="23" Margin="384,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <RadioButton x:Name="Add_Second_Name_Male" Content="Муж." HorizontalAlignment="Left" Margin="307,261,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="Add_Second_Name_Female" Content="Жен." HorizontalAlignment="Left" Margin="359,261,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="Add_Surname_Male" GroupName="Add_Surname_Gender" Content="Муж." HorizontalAlignment="Left" Margin="307,84,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="Add_Surname_Female" GroupName="Add_Surname_Gender" Content="Жен." HorizontalAlignment="Left" Margin="359,84,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="Муж." HorizontalAlignment="Left" Margin="307,175,0,0" VerticalAlignment="Top"/>
-        <RadioButton Content="Жен." HorizontalAlignment="Left" Margin="359,175,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="Add_Name_Male" GroupName="Add_Name_Gender" Content="Муж." HorizontalAlignment="Left" Margin="307,175,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="Add_Name_Female" GroupName="Add_Name_Gender" Content="Жен." HorizontalAlignment="Left" Margin="359,175,0,0" VerticalAlignment="Top"/>
         <Button Content="Добавить" HorizontalAlignment="Left" Margin="307,104,0,0" VerticalAlignment="Top" Width="197" Height="21" Click="Add_Surname_Click"/>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="307,195,0,0" VerticalAlignment="Top" Width="197" Height="21"/>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="307,281,0,0" VerticalAlignment="Top" Width="197" Height="21"/>
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="307,195,0,0" VerticalAlignment="Top" Width="197" Height="21" Click="Add_Name_Click"/>
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="307,281,0,0" VerticalAlignment="Top" Width="197" Height="21" Click="Add_Second_Name_Click"/>
         <Label Content="Добавленные вами данные" HorizontalAlignment="Left" Margin="605,10,0,0" VerticalAlignment="Top" FontSize="20"/>
         <TextBox HorizontalAlignment="Left" Height="250" Margin="611,52,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="256"/>
 
