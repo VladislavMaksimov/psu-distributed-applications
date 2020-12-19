@@ -75,9 +75,9 @@ namespace client1
 
             surname.Name = Add_Surname.Text;
 
-            if (Generate_Male.IsChecked == true)
+            if (Add_Surname_Male.IsChecked == true)
                 surname.Gender = true;
-            else if (Generate_Male.IsChecked == false)
+            else if (Add_Surname_Male.IsChecked == false)
                 surname.Gender = false;
             else return;
 
