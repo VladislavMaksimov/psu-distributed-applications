@@ -18,6 +18,8 @@
     <Name>server</Name>
     <RootNamespace>server</RootNamespace>
     <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,7 +36,6 @@
     <Compile Include="messages_pb2.py" />
     <Compile Include="runserver.py" />
     <Compile Include="server\__init__.py" />
-    <Compile Include="server\views.py" />
     <Compile Include="storage\__init__.py">
       <SubType>Code</SubType>
     </Compile>
